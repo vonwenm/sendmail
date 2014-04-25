@@ -4,10 +4,14 @@ import (
 	"net/smtp"
 )
 
+// SMTP uses net/smtp to send the Mail
 type SMTP struct {
+	// Host is the SMTP-Server to connect to, for example "localhost:25"
 	Host string
 }
 
+// Send implements the Sender interface. It uses both (*Mail).SanitizeHeaders
+// and (*Mail).Encode
 func (mailer SMTP) Send(m *Mail) error {
 	m.SanitizeHeaders()
 

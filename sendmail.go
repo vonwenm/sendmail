@@ -6,7 +6,9 @@ import (
 )
 
 var (
+	// The default path where to search for the sendmail-binary
 	SendmailDefaultPath = "/usr/sbin/sendmail"
+	// The default arguments to pass to sendmail
 	SendmailDefaultArgs = []string{
 		"-t",
 	}
@@ -16,10 +18,14 @@ type Sendmail struct {
 	// Path to the sendmail binary. If emtpy, SendmailDefaultPath is used
 	Path string
 
-	// Args to pass to sendmail. If nil, SendmailDefaultArgs is used
+	// Args to pass to sendmail. There might be format strings implemented for
+	// this in the future, so to provide forward compatibility, you should
+	// avoid '%'-characters. If nil, SendmailDefaultArgs is used
 	Args []string
 }
 
+// Send implements the Sender interface. It uses both (*Mail).SanitizeHeaders()
+// and (*Mail).Encode
 func (mailer Sendmail) Send(m *Mail) error {
 	m.SanitizeHeaders()
 
