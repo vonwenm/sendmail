@@ -37,7 +37,7 @@ type Mail struct {
 type Sender interface {
 	// Send the given E-Mail via this sender. Send might use
 	// (*Mail).SanitizeHeaders and (*Mail).Encode as helpers
-	Send(Mail) error
+	Send(*Mail) error
 }
 
 // NewMail returns a new Mail with Headers initialized to an empty map
